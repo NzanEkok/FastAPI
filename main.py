@@ -39,12 +39,34 @@ class post(BaseModel):
 
 
 @app.post("/post") #Simple post without validation
-def createpost(payload: dict = Body(...)): 
+def createpost(payload: dict = Body(...)): #converting the payload to a dictionary
     print(payload)
     return{"New post created" : payload}
 
 
 @app.post("/createpost") #Post with schema validation from pydantic basemodel
 def createpost(Post : post):
-    print(Post.dict())
+    #print(Post.dict())
     return{"New post created" : Post }
+
+
+userpost = [
+    {
+        "id" : "1",
+        "title" : "First story",
+        "content" : "This is my first story"
+    },
+    {   "id" : "2",
+        "title" : "Second story",
+        "content" : "This is my second story"
+    },
+    {
+        "id" : "3",
+        "title" : "Third story",
+        "content" : "This is my third story" 
+    }
+        ]
+
+@app.get("/userpost")
+def user_post():
+    return{"data" : userpost}
