@@ -1,7 +1,8 @@
 from typing import Optional
 from fastapi import FastAPI
 from fastapi.param_functions import Body
-from pydantic import BaseModel 
+from pydantic import BaseModel
+from random import randrange
 
 app = FastAPI()
 
@@ -46,7 +47,7 @@ def createpost(payload: dict = Body(...)): #converting the payload to a dictiona
 
 @app.post("/createpost") #Post with schema validation from pydantic basemodel
 def createpost(Post : post):
-    #print(Post.dict())
+    #print(Post.dict()) #converting the payload to a dictionary
     return{"New post created" : Post }
 
 
@@ -68,5 +69,12 @@ userpost = [
         ]
 
 @app.get("/userpost")
-def user_post():
+def getpost():
     return{"data" : userpost}
+
+@app.post("/userpost") #decorator
+def createpost(post : post): #defining the payload
+    condic = post.dict()      #converting pydentic model to a dictionary
+    condic["id"] = randrange(0 , 1000000)
+    userpost.append(condic)
+    return{"Successful" : condic}
