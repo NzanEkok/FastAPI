@@ -68,13 +68,18 @@ userpost = [
     }
         ]
 
-@app.get("/userpost")
+@app.get("/userposts")
 def getpost():
     return{"data" : userpost}
 
-@app.post("/userpost") #decorator
+@app.post("/userposts") #decorator
 def createpost(post : post): #defining the payload
-    condic = post.dict()      #converting pydentic model to a dictionary
-    condic["id"] = randrange(0 , 1000000)
-    userpost.append(condic)
-    return{"Successful" : condic}
+    convdict = post.dict()      #converting pydentic model to a dictionary
+    convdict["id"] = randrange(0 , 1000000) #generating random id using randrange
+    userpost.append(convdict)
+    return{"Successful" : convdict}
+
+
+@app.get("/userposts/{id}")
+def getpostbyID():
+    return{"data"}
